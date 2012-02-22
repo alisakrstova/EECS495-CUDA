@@ -51,7 +51,7 @@ CCFILES		:= matrixmul_gold.cpp
 ################################################################################
 # Rules and targets
 
-SDKDIR     ?= /home/hardav/NVIDIA_GPU_Computing_SDK
+SDKDIR     ?= /home/hlc720/NVIDIA_GPU_Computing_SDK
 ROOTDIR    ?= $(SDKDIR)/C/common
 ROOTBINDIR ?= bin
 
