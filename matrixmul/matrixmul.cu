@@ -118,7 +118,7 @@ int main(int argc, char** argv) {
     CUTBoolean res = cutComparefe(reference.elements, P.elements, 
 									size_elements, 0.0001f);
     printf("Test %s\n", (1 == res) ? "PASSED" : "FAILED");
-    
+
     // output result if output file is requested
     if(argc == 4)
     {
@@ -158,7 +158,7 @@ void MatrixMulOnDevice(const Matrix M, const Matrix N, Matrix P)
 
 	dim3 grid(1,1);
 	dim3 blocks(1,512);
-	MatrixMulKernel<<<grid, blocks>>>(D_M, D_N, D_P);
+	MatrixMulKernel<<<1, 512>>>(D_M, D_N, D_P);
 	//MatrixMulKernel(D_M, D_N, D_P);
 
 	cudaThreadSynchronize();
