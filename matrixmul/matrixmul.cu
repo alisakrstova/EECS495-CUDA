@@ -161,7 +161,7 @@ void MatrixMulOnDevice(const Matrix M, const Matrix N, Matrix P)
 	MatrixMulKernel<<<grid, blocks>>>(D_M, D_N, D_P);
 	//MatrixMulKernel(D_M, D_N, D_P);
 
-	cudaThreadsSynchronize();
+	cudaThreadSynchronize();
 	int i;
 	CopyFromDeviceMatrix(M, D_M);
 	CopyFromDeviceMatrix(N, D_N);

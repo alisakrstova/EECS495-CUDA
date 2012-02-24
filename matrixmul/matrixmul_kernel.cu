@@ -60,6 +60,7 @@ __global__ void MatrixMulKernel(Matrix M, Matrix N, Matrix P)
 
 	for(i=0;i<M.width;i++){
 		P.elements[tid] += M.elements[row * M.width + i] * N.elements[i * M.width + col];
+		__syncthreads();
 	}
 
 
