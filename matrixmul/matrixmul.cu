@@ -162,9 +162,9 @@ void MatrixMulOnDevice(const Matrix M, const Matrix N, Matrix P)
 	//MatrixMulKernel(D_M, D_N, D_P);
 
 	CopyFromDeviceMatrix(P, D_P);
-	cudaFree(D_M);
-	cudaFree(D_N);
-	cudaFree(D_P);
+	cudaFree(D_M.elements);
+	cudaFree(D_N.elements);
+	cudaFree(D_P.elements);
 }
 
 // Allocate a device matrix of same size as M.
