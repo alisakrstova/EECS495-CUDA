@@ -54,8 +54,8 @@ __global__ void MatrixMulKernel(Matrix M, Matrix N, Matrix P)
 	//Multiply the two matrices
 	unsigned int tid = threadIdx.x;
 	unsigned int i;
-	unsigned int row = tid / M.width;
-	unsigned int col = tid % M.width;
+	unsigned int row = tid / 16;
+	unsigned int col = tid % 16;
 	//float Pval;
 
 	__shared__ float S_M[16][16];
@@ -72,7 +72,7 @@ __global__ void MatrixMulKernel(Matrix M, Matrix N, Matrix P)
 		__syncthreads();
 	}
 
-	//P.elements[tid]=S_P[row][col];
+	P.elements[tid]=S_P[row][col];
 	__syncthreads();
 }
 
