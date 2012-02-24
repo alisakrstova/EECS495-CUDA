@@ -52,10 +52,10 @@
 __global__ void MatrixMulKernel(Matrix M, Matrix N, Matrix P)
 {
 	//Multiply the two matrices
-	int tid = threadIdx.x;
-	int i;
-	int row = tid / M.width;
-	int col = tid % M.width;
+	unsigned int tid = threadIdx.x;
+	unsigned int i;
+	unsigned int row = tid / M.width;
+	unsigned int col = tid % M.width;
 	float Pval;
 
 	for(i=0;i<M.width;i++){
