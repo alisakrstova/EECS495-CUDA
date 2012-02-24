@@ -63,10 +63,6 @@ __global__ void MatrixMulKernel(Matrix M, Matrix N, Matrix P)
 		__syncthreads();
 	}
 
-
-
-
-
 }
 
 #endif // #ifndef _MATRIXMUL_KERNEL_H_
