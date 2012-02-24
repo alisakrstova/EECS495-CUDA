@@ -62,8 +62,11 @@ __global__ void MatrixMulKernel(Matrix M, Matrix N, Matrix P)
 	__shared__ float S_M[16][16];
 	S_M[row][col]=M.elements[tid];
 	__syncthreads();
-	/*
+	
 	__shared__ float S_N[16][16];
+	S_N[row][col]=N.elements[tid];
+	__syncthreads();
+	/*
 	__shared__ float S_P[16][16];
 	S_M[row][col]=M.elements[tid];
 	S_N[row][col]=N.elements[tid];
@@ -72,7 +75,7 @@ __global__ void MatrixMulKernel(Matrix M, Matrix N, Matrix P)
 	*/
 	for(i=0;i<16;i++){
 		//P.elements[tid] += M.elements[row * M.width + i] * N.elements[i * M.width + col];
-		P.elements[tid] += S_M[row][i] * N.elements[i * M.width + col];
+		P.elements[tid] += S_M[row][i] * S_N[i][col];
 		//S_P[row][col] += S_M[row][i] * S_N[i][col];
 		__syncthreads();
 	}
