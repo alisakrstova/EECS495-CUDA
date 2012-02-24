@@ -67,7 +67,7 @@ __global__ void MatrixMulKernel(Matrix M, Matrix N, Matrix P)
 	S_N[row][col]=N.elements[tid];
 	//__syncthreads();
 	
-	float sum =0;
+	float sum = 0;
 	/*
 	S_M[row][col]=M.elements[tid];
 	S_N[row][col]=N.elements[tid];
@@ -80,8 +80,8 @@ __global__ void MatrixMulKernel(Matrix M, Matrix N, Matrix P)
 		sum += S_M[row][i] * S_N[i][col];
 		//__syncthreads();
 	}
-	//__syncthreads();
-	P.elements[tid]=sum;
+	__syncthreads();
+	P.elements[tid] = sum;
 	//__syncthreads();
 }
 
