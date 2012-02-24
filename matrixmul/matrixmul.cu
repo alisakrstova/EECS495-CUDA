@@ -164,7 +164,7 @@ void MatrixMulOnDevice(const Matrix M, const Matrix N, Matrix P)
 	CopyFromDeviceMatrix(P, D_P);
 	int i;
 	for(i=0;i<M.width*M.width;i++){
-		printf("%8f,",P.elements[i];
+		printf("%8f,",P.elements[i]);
 		if(i%16==0)putchar('\n');
 	}
 	cudaFree(D_M.elements);
