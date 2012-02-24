@@ -118,11 +118,7 @@ int main(int argc, char** argv) {
     CUTBoolean res = cutComparefe(reference.elements, P.elements, 
 									size_elements, 0.0001f);
     printf("Test %s\n", (1 == res) ? "PASSED" : "FAILED");
-    int i;
-    for(i=0;i<M.width*M.width;i++){
-		if(i%16==0)putchar('\n');
-		printf("%8f,",reference.elements[i]);
-	}
+    
     // output result if output file is requested
     if(argc == 4)
     {
