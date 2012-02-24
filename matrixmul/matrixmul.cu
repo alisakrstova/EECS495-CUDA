@@ -157,7 +157,7 @@ void MatrixMulOnDevice(const Matrix M, const Matrix N, Matrix P)
 	CopyToDeviceMatrix(D_P, P);
 
 	dim3 grid(1,1);
-	dim3 blocks(1,M.width);
+	dim3 blocks(1,512);
 	MatrixMulKernel<<<grid, blocks>>>(D_M, D_N, D_P);
 	//MatrixMulKernel(D_M, D_N, D_P);
 
@@ -180,8 +180,8 @@ void MatrixMulOnDevice(const Matrix M, const Matrix N, Matrix P)
 	CopyFromDeviceMatrix(P, D_P);
 
 	for(i=0;i<M.width*M.width;i++){
-		printf("%8f,",P.elements[i]);
 		if(i%16==0)putchar('\n');
+		printf("%8f,",P.elements[i]);
 	}
 	putchar('\n');
 	cudaFree(D_M.elements);
