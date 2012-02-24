@@ -151,14 +151,20 @@ void MatrixMulOnDevice(const Matrix M, const Matrix N, Matrix P)
 	Matrix D_P;
 	D_M=AllocateDeviceMatrix(M);
 	CopyToDeviceMatrix(D_M, M);
-	CopyFromDeviceMatrix(M, D_M);
 	D_N=AllocateDeviceMatrix(N);
 	CopyToDeviceMatrix(D_N, N);
-	CopyFromDeviceMatrix(N, D_N);
 	D_P=AllocateDeviceMatrix(P);
 	CopyToDeviceMatrix(D_P, P);
-	
+
+	dim3 grid(1,1);
+	dim3 blocks(1,M.width);
+	MatrixMulKernel<<<grid, blocks>>>(D_M, D_N, D_P);
+	//MatrixMulKernel(D_M, D_N, D_P);
+
+	cudaThreadsSynchronize();
 	int i;
+	CopyFromDeviceMatrix(M, D_M);
+	CopyFromDeviceMatrix(N, D_N);
 	for(i=0;i<M.width*M.width;i++){
 		printf("%8f,",M.elements[i]);
 		if(i%16==0)putchar('\n');
@@ -167,11 +173,6 @@ void MatrixMulOnDevice(const Matrix M, const Matrix N, Matrix P)
 		printf("%8f,",N.elements[i]);
 		if(i%16==0)putchar('\n');
 	}
-
-	dim3 grid(1,1);
-	dim3 blocks(1,M.width);
-	MatrixMulKernel<<<grid, blocks>>>(D_M, D_N, D_P);
-	//MatrixMulKernel(D_M, D_N, D_P);
 
 	CopyFromDeviceMatrix(P, D_P);
 
