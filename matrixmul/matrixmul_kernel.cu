@@ -68,6 +68,8 @@ __global__ void MatrixMulKernel(Matrix M, Matrix N, Matrix P)
 	__syncthreads();
 	
 	__shared__ float S_P[16][16];
+	S_N[row][col] = 0;
+	__syncthreads();
 	/*
 	S_M[row][col]=M.elements[tid];
 	S_N[row][col]=N.elements[tid];
