@@ -146,12 +146,25 @@ int main(int argc, char** argv) {
 void MatrixMulOnDevice(const Matrix M, const Matrix N, Matrix P)
 {
 	//Interface host call to the device kernel code and invoke the kernel
-	
-	
-	
-	
-	
-	
+	Matrix D_M;
+	Matrix D_N;
+	Matrix D_P;
+	D_M=AllocateDeviceMatrix(M);
+	CopyToDeviceMatrix(D_M, M);
+	D_N=AllocateDeviceMatrix(N);
+	CopyToDeviceMatrix(D_N, N);
+	D_P=AllocateDeviceMatrix(P);
+	CopyToDeviceMatrix(D_P, P);
+
+	dim3 gird(1,1);
+	dim3 threads(1,512);
+	MatrixMulKernel<<<no_of_grid, no_of_blocks>>>(D_M, D_N, D_P);
+	//MatrixMulKernel(D_M, D_N, D_P);
+
+	CopyFromDeviceMatrix(P, D_P);
+	cudaFree(D_M);
+	cudaFree(D_N);
+	cudaFree(D_P);
 }
 
 // Allocate a device matrix of same size as M.
