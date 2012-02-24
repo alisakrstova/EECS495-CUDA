@@ -165,6 +165,7 @@ void MatrixMulOnDevice(const Matrix M, const Matrix N, Matrix P)
 	int i;
 	CopyFromDeviceMatrix(M, D_M);
 	CopyFromDeviceMatrix(N, D_N);
+	/*
 	for(i=0;i<M.width*M.width;i++){
 		printf("%8f,",M.elements[i]);
 		if(i%16==0)putchar('\n');
@@ -175,7 +176,7 @@ void MatrixMulOnDevice(const Matrix M, const Matrix N, Matrix P)
 		if(i%16==0)putchar('\n');
 	}
 	putchar('\n');
-
+	*/
 	CopyFromDeviceMatrix(P, D_P);
 
 	for(i=0;i<M.width*M.width;i++){
