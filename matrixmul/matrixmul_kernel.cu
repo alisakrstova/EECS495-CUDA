@@ -54,12 +54,12 @@ __global__ void MatrixMulKernel(Matrix M, Matrix N, Matrix P)
 	//Multiply the two matrices
 	unsigned int tid = threadIdx.x;
 	unsigned int i;
-	unsigned int row = tid / M.width;
-	unsigned int col = tid % M.width;
+	//unsigned int row = tid / M.width;
+	//unsigned int col = tid % M.width;
 	//float Pval;
 
-	for(i=0;i<M.width;i++){
-		P.elements[tid] += M.elements[row * M.width + i] * N.elements[i * M.width + col];
+	for(i=0;i<16;i++){
+		P.elements[tid] += M.elements[(tid / M.width) * M.width + i] * N.elements[i * M.width + (tid % M.width)];
 		__syncthreads();
 	}
 
