@@ -156,9 +156,9 @@ void MatrixMulOnDevice(const Matrix M, const Matrix N, Matrix P)
 	D_P=AllocateDeviceMatrix(P);
 	CopyToDeviceMatrix(D_P, P);
 
-	dim3 gird(1,1);
-	dim3 threads(1,512);
-	MatrixMulKernel<<<no_of_grid, no_of_blocks>>>(D_M, D_N, D_P);
+	dim3 grid(1,1);
+	dim3 blocks(1,512);
+	MatrixMulKernel<<<grid, blocks>>>(D_M, D_N, D_P);
 	//MatrixMulKernel(D_M, D_N, D_P);
 
 	CopyFromDeviceMatrix(P, D_P);
