@@ -70,8 +70,8 @@ __global__ void MatrixMulKernel(Matrix M, Matrix N, Matrix P)
 		S_P[row][col] += S_M[row][i] * S_N[i][col];
 		__syncthreads();
 	}
-	
-	P.elements[row * M.width + col];=S_P[row][col];
+
+	P.elements[row * M.width + col]=S_P[row][col];
 }
 
 #endif // #ifndef _MATRIXMUL_KERNEL_H_
