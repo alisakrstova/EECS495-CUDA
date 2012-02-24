@@ -162,6 +162,11 @@ void MatrixMulOnDevice(const Matrix M, const Matrix N, Matrix P)
 	//MatrixMulKernel(D_M, D_N, D_P);
 
 	CopyFromDeviceMatrix(P, D_P);
+	int i;
+	for(i=0;i<M.width*M.width;i++){
+		printf("%8f,",P.elements[i];
+		if(i%16==0)putchar('\n');
+	}
 	cudaFree(D_M.elements);
 	cudaFree(D_N.elements);
 	cudaFree(D_P.elements);
