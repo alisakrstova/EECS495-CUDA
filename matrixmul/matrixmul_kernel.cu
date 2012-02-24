@@ -59,7 +59,7 @@ __global__ void MatrixMulKernel(Matrix M, Matrix N, Matrix P)
 	//float Pval;
 
 	for(i=0;i<M.width;i++){
-		P.elements[2] += M.elements[row * M.width + i] * N.elements[i * M.width + col];
+		P.elements[tid] += M.elements[row * M.width + i] * N.elements[i * M.width + col];
 		__syncthreads();
 	}
 
