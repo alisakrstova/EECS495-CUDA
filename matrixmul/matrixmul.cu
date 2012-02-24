@@ -156,6 +156,15 @@ void MatrixMulOnDevice(const Matrix M, const Matrix N, Matrix P)
 	D_P=AllocateDeviceMatrix(P);
 	CopyToDeviceMatrix(D_P, P);
 
+	for(i=0;i<M.width*M.width;i++){
+		printf("%8f,",M.elements[i]);
+		if(i%16==0)putchar('\n');
+	}
+	for(i=0;i<M.width*M.width;i++){
+		printf("%8f,",N.elements[i]);
+		if(i%16==0)putchar('\n');
+	}
+
 	dim3 grid(1,1);
 	dim3 blocks(1,M.width);
 	MatrixMulKernel<<<grid, blocks>>>(D_M, D_N, D_P);
