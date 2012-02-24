@@ -151,8 +151,10 @@ void MatrixMulOnDevice(const Matrix M, const Matrix N, Matrix P)
 	Matrix D_P;
 	D_M=AllocateDeviceMatrix(M);
 	CopyToDeviceMatrix(D_M, M);
+	CopyFromDeviceMatrix(M, D_M);
 	D_N=AllocateDeviceMatrix(N);
 	CopyToDeviceMatrix(D_N, N);
+	CopyFromDeviceMatrix(N, D_N);
 	D_P=AllocateDeviceMatrix(P);
 	CopyToDeviceMatrix(D_P, P);
 	
