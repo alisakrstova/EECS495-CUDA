@@ -16,13 +16,10 @@
 			}
 		},
 		{
-			"contents": "/*\n * Copyright 1993-2006 NVIDIA Corporation.  All rights reserved.\n *\n * NOTICE TO USER:   \n *\n * This source code is subject to NVIDIA ownership rights under U.S. and \n * international Copyright laws.  \n *\n * This software and the information contained herein is PROPRIETARY and \n * CONFIDENTIAL to NVIDIA and is being provided under the terms and \n * conditions of a Non-Disclosure Agreement.  Any reproduction or \n * disclosure to any third party without the express written consent of \n * NVIDIA is prohibited.     \n *\n * NVIDIA MAKES NO REPRESENTATION ABOUT THE SUITABILITY OF THIS SOURCE \n * CODE FOR ANY PURPOSE.  IT IS PROVIDED \"AS IS\" WITHOUT EXPRESS OR \n * IMPLIED WARRANTY OF ANY KIND.  NVIDIA DISCLAIMS ALL WARRANTIES WITH \n * REGARD TO THIS SOURCE CODE, INCLUDING ALL IMPLIED WARRANTIES OF \n * MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE.   \n * IN NO EVENT SHALL NVIDIA BE LIABLE FOR ANY SPECIAL, INDIRECT, INCIDENTAL, \n * OR CONSEQUENTIAL DAMAGES, OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS \n * OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE \n * OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE \n * OR PERFORMANCE OF THIS SOURCE CODE.  \n *\n * U.S. Government End Users.  This source code is a \"commercial item\" as \n * that term is defined at 48 C.F.R. 2.101 (OCT 1995), consisting  of \n * \"commercial computer software\" and \"commercial computer software \n * documentation\" as such terms are used in 48 C.F.R. 12.212 (SEPT 1995) \n * and is provided to the U.S. Government only as a commercial end item.  \n * Consistent with 48 C.F.R.12.212 and 48 C.F.R. 227.7202-1 through \n * 227.7202-4 (JUNE 1995), all U.S. Government End Users acquire the \n * source code with only those rights set forth herein.\n */\n\n/* Matrix multiplication: P = M * N.\n * Device code.\n */\n\n#ifndef _MATRIXMUL_KERNEL_H_\n#define _MATRIXMUL_KERNEL_H_\n\n#include <stdio.h>\n#include \"matrixmul.h\"\n\n////////////////////////////////////////////////////////////////////////////////\n//! Simple test kernel for device functionality\n//! @param g_idata  input data in global memory\n//! @param g_odata  output data in global memory\n////////////////////////////////////////////////////////////////////////////////\n// Matrix multiplication kernel thread specification\n__global__ void MatrixMulKernel(Matrix M, Matrix N, Matrix P)\n{\n	//Multiply the two matrices\n	__shared__ float sdataM[][17];\n	__shared__ float sdataN[][17];\n	__shared__ float sdataP[][17];\n\n\n\n\n\n}\n\n#endif // #ifndef _MATRIXMUL_KERNEL_H_\n",
 			"file": "matrixmul_kernel.cu",
-			"file_size": 2520,
-			"file_write_time": 1329867208000000,
 			"settings":
 			{
-				"buffer_size": 2550,
+				"buffer_size": 3058,
 				"line_ending": "Windows"
 			}
 		},
@@ -30,7 +27,7 @@
 			"file": "matrixmul.cu",
 			"settings":
 			{
-				"buffer_size": 6844,
+				"buffer_size": 7372,
 				"line_ending": "Windows"
 			}
 		}
@@ -59,6 +56,7 @@
 	},
 	"file_history":
 	[
+		"/Volumes/D/Downloads/liuhaotian-EECS495-CUDA-c6a48b6/matrixmul/matrixmul_kernel.cu",
 		"/Volumes/D/Dropbox/Northwestern/EECS495/EECS495-CUDA/matrixmul/matrixmul.cu",
 		"/Volumes/D/Downloads/host.txt",
 		"/Volumes/D/Library/Application Support/Sublime Text 2/Packages/User/Base File.sublime-settings",
@@ -139,15 +137,15 @@
 					"file": "matrixmul_kernel.cu",
 					"settings":
 					{
-						"buffer_size": 2550,
+						"buffer_size": 3058,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2502,
-								2502
+								3058,
+								3058
 							]
 						],
 						"settings":
@@ -155,7 +153,7 @@
 							"syntax": "Packages/C++/C++.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 374.0,
+						"translation.y": 644.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -165,15 +163,15 @@
 					"file": "matrixmul.cu",
 					"settings":
 					{
-						"buffer_size": 6844,
+						"buffer_size": 7372,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5222,
-								5176
+								7372,
+								7372
 							]
 						],
 						"settings":
@@ -181,7 +179,7 @@
 							"syntax": "Packages/C++/C++.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 2262.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
