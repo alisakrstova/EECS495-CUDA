@@ -48,6 +48,7 @@
 
 // includes, kernels
 #include <matrixmul_kernel.cu>
+#include <sys/time.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 // declarations, forward
@@ -74,6 +75,7 @@ int main(int argc, char** argv) {
 	Matrix  M;
 	Matrix  N;
 	Matrix  P;
+	
 	// Number of elements in the solution matrix
 	//  Assuming square matrices, so the sizes of M, N and P are equal
 	unsigned int size_elements = WP * HP;
@@ -106,19 +108,20 @@ int main(int argc, char** argv) {
 			return 1;
 		}
 	}
-
-	// M * N on the device
+    
+    // M * N on the device
     MatrixMulOnDevice(M, N, P);
     
     // compute the matrix multiplication on the CPU for comparison
     Matrix reference = AllocateMatrix(MATRIX_SIZE, MATRIX_SIZE, 0);
+    
     computeGold(reference.elements, M.elements, N.elements, HM, WM, WN);
-        
+            
     // check if the device result is equivalent to the expected solution
     CUTBoolean res = cutComparefe(reference.elements, P.elements, 
 									size_elements, 0.0001f);
     printf("Test %s\n", (1 == res) ? "PASSED" : "FAILED");
-
+    
     // output result if output file is requested
     if(argc == 4)
     {
@@ -149,38 +152,22 @@ void MatrixMulOnDevice(const Matrix M, const Matrix N, Matrix P)
 	Matrix D_M;
 	Matrix D_N;
 	Matrix D_P;
-	D_M=AllocateDeviceMatrix(M);
+	
+	// Copy the matrices to the device
+	D_M = AllocateDeviceMatrix(M);
 	CopyToDeviceMatrix(D_M, M);
-	D_N=AllocateDeviceMatrix(N);
+	D_N = AllocateDeviceMatrix(N);
 	CopyToDeviceMatrix(D_N, N);
-	D_P=AllocateDeviceMatrix(P);
+	D_P = AllocateDeviceMatrix(P);
 	CopyToDeviceMatrix(D_P, P);
-
-	MatrixMulKernel<<<1, 512>>>(D_M, D_N, D_P);
-	//MatrixMulKernel(D_M, D_N, D_P);
-
+	
+	// Kernel call with 1 grid, 1 block and 256 threads
+	MatrixMulKernel<<<1, 256>>>(D_M, D_N, D_P);
+	
 	cudaThreadSynchronize();
-	/*
-	for(i=0;i<M.width*M.width;i++){
-		printf("%8f,",M.elements[i]);
-		if(i%16==0)putchar('\n');
-	}
-	putchar('\n');
-	for(i=0;i<M.width*M.width;i++){
-		printf("%8f,",N.elements[i]);
-		if(i%16==0)putchar('\n');
-	}
-	putchar('\n');
-	*/
+	
 	CopyFromDeviceMatrix(P, D_P);
-	/*
-	int i;
-	for(i=0;i<M.width*M.width;i++){
-		if(i%16==0)putchar('\n');
-		printf("%8f,",P.elements[i]);
-	}
-	putchar('\n');
-	*/
+			
 	cudaFree(D_M.elements);
 	cudaFree(D_N.elements);
 	cudaFree(D_P.elements);

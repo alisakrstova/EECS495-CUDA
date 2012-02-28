@@ -50,39 +50,34 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Matrix multiplication kernel thread specification
 __global__ void MatrixMulKernel(Matrix M, Matrix N, Matrix P)
-{
-	//Multiply the two matrices
-	unsigned int tid = threadIdx.x;
-	unsigned int i;
-	unsigned int row = tid / 16;
-	unsigned int col = tid % 16;
-	//float Pval;
-
+{ 
+  //Multiply the two matrices
+  unsigned int tid = threadIdx.x;
+  unsigned int i;
+  unsigned int row = tid / 16;
+  unsigned int col = tid % 16;
+  
+  // Shared memory for matrices with padding for matrix N
+  __shared__ float S_M[16][16];
+  __shared__ float S_N[16][17];
+  
+  // Copy all the elements of matrix M
+  S_M[row][col]=M.elements[tid];
+  __syncthreads();
+  
+  // Copy all the elements of matrix N
+  S_N[row][col]=N.elements[tid];
+  __syncthreads();
 	
-	__shared__ float S_M[16][16];
-	S_M[row][col]=M.elements[tid];
-	__syncthreads();
-	
-	__shared__ float S_N[16][17];
-	S_N[row][col]=N.elements[tid];
-	__syncthreads();
-	
-	float sum = 0;
-	/*
-	S_M[row][col]=M.elements[tid];
-	S_N[row][col]=N.elements[tid];
-	//S_P[row][col]=P.elements[row * M.width + col];
-	__syncthreads();
-	*/
-	for(i=0;i<16;i++){
-		//P.elements[tid] += M.elements[row * M.width + i] * N.elements[i * M.width + col];
-		//P.elements[tid] += S_M[row][i] * S_N[i][col];
-		sum += S_M[row][i] * S_N[i][col];
-		//__syncthreads();
-	}
-	__syncthreads();
-	P.elements[tid] = sum;
-	//__syncthreads();
+  float sum = 0.0f;
+ 
+  for(i=0;i<16;i++){
+    sum += S_M[row][i] * S_N[i][col];
+  }
+  __syncthreads();
+    
+  // Write the result back to global memory
+  P.elements[tid] = sum;
 }
 
 #endif // #ifndef _MATRIXMUL_KERNEL_H_
