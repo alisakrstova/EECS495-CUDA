@@ -1,0 +1,316 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "opt_2dhisto.cu",
+			"settings":
+			{
+				"buffer_size": 433,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "test_harness.cpp",
+			"settings":
+			{
+				"buffer_size": 3329,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "util.cpp",
+			"settings":
+			{
+				"buffer_size": 594,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "util.h",
+			"settings":
+			{
+				"buffer_size": 1154,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Volumes/D/Dropbox/Northwestern/EECS495/EECS495-CUDA/histogram/Makefile",
+		"/Volumes/D/Dropbox/Northwestern/EECS452/EECS452-SimpleScalar/bpred.h",
+		"/Volumes/D/Dropbox/Northwestern/EECS452/EECS452-SimpleScalar/stats.c",
+		"/Volumes/D/Dropbox/Northwestern/EECS452/EECS452-SimpleScalar/target-pisa/pisa.h",
+		"/Volumes/D/Dropbox/Northwestern/EECS452/EECS452-SimpleScalar/bpred.c",
+		"/Volumes/D/Dropbox/Northwestern/EECS452/EECS452-SimpleScalar/result.txt",
+		"/Volumes/D/Dropbox/Northwestern/EECS452/EECS452-SimpleScalar/Makefile",
+		"/Volumes/D/Downloads/liuhaotian-EECS495-CUDA-c6a48b6/matrixmul/matrixmul_kernel.cu",
+		"/Volumes/D/Dropbox/Northwestern/EECS495/EECS495-CUDA/matrixmul/matrixmul.cu",
+		"/Volumes/D/Downloads/host.txt",
+		"/Volumes/D/Library/Application Support/Sublime Text 2/Packages/User/Base File.sublime-settings",
+		"/Volumes/D/Library/Application Support/Sublime Text 2/Packages/Default/Base File.sublime-settings",
+		"/Volumes/D/Library/Application Support/Sublime Text 2/Packages/User/Global.sublime-settings",
+		"/Volumes/D/Library/Application Support/Sublime Text 2/Packages/Default/Global.sublime-settings",
+		"/Volumes/Ramdisk/logfile",
+		"/Volumes/Ramdisk/p7zip_9.20.1/README",
+		"/Volumes/Ramdisk/p7zip_9.20.1/makefile.macosx_llvm_64bits",
+		"/Volumes/Ramdisk/p7zip_9.20.1/makefile.macosx_64bits",
+		"/Volumes/Ramdisk/DOC/readme.txt",
+		"/Volumes/D/Dropbox/Northwestern/EECS452/EECS452-SimpleScalar/sim-bpred.c"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"MD_BR_SHIFT",
+			"\"total number of direction-predicted hits\"\n       \"(includes addr-hits)\"",
+			"\"branch direction-prediction rate\"",
+			"\"total number of direction-predicted hits \"",
+			"\"total number of bpred lookups\"",
+			" (i.e., all-hits/updates)\",",
+			"stat_reg_sqword",
+			"stat_reg_counter",
+			", name)",
+			"retstack",
+			"stack_recover_idx",
+			"stack_idx",
+			"/* get the next predicted fetch address */\n	      pred_PC = bpred_lookup(pred,\n				     /* branch addr */regs.regs_PC,\n				     /* target */target_PC,\n				     /* inst opcode */op,\n				     /* call? */MD_IS_CALL(op),\n				     /* return? */MD_IS_RETURN(op),\n				     /* stash an update ptr */&update_rec,\n				     /* stash return stack ptr */&stack_idx);"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"\"total # of direction-predicted hits\"",
+			"\"cond branch direction-prediction rate\"",
+			"\"total number of direction-predicted hits\"",
+			"\"total number of cond bpred lookups\"",
+			"\",",
+			")\",",
+			")"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "opt_2dhisto.cu",
+					"settings":
+					{
+						"buffer_size": 433,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								129,
+								140
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "test_harness.cpp",
+					"settings":
+					{
+						"buffer_size": 3329,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "util.cpp",
+					"settings":
+					{
+						"buffer_size": 594,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "util.h",
+					"settings":
+					{
+						"buffer_size": 1154,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true
+}
