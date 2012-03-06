@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <cutil.h>
 
 #include "util.h"
 #include "ref_2dhisto.h"
@@ -84,8 +85,6 @@ int main(int argc, char* argv[])
             ref_2dhisto(input, INPUT_HEIGHT, INPUT_WIDTH, gold_bins);)
 
     /* Include your setup code below (temp variables, function calls, etc.) */
-
-    #include <cutil.h>
 
     void* G_input;
     //padded width and hight are 1024
