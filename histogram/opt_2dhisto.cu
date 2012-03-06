@@ -27,13 +27,10 @@ __global__ void opt_2dhistoKernel(uint32_t *input[], size_t height, size_t width
     {
         for (size_t i = 0; i < width; ++i)
         {
-            const uint32_t value = input[j][i];
-
-            uint8_t *p = (uint8_t*)bins;
 
             // Increment the appropriate bin, but do not roll-over the max value
-            if (p[value] < UINT8_MAX)
-                ++p[value];
+            if (bins[input[j][i]] < UINT8_MAX)
+                ++bins[input[j][i]];
         }
     }
 }
