@@ -21,5 +21,17 @@ void opt_2dhisto(uint32_t *input[], size_t height, size_t width, uint8_t bins[HI
 
 __global__ void opt_2dhistoKernel(uint32_t *input[], size_t height, size_t width, uint8_t bins[HISTO_HEIGHT*HISTO_WIDTH]){
 
+    for (size_t j = 0; j < height; ++j)
+    {
+        for (size_t i = 0; i < width; ++i)
+        {
+            const uint32_t value = input[j][i];
 
+            uint8_t *p = (uint8_t*)bins;
+
+            // Increment the appropriate bin, but do not roll-over the max value
+            if (p[value] < UINT8_MAX)
+                ++p[value];
+        }
+    }
 }
