@@ -1,7 +1,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <cutil.h>
 
 #include "util.h"
 #include "ref_2dhisto.h"
@@ -88,13 +87,12 @@ int main(int argc, char* argv[])
 
     void* G_input;
     //padded width and hight are 1024
-    cudaMalloc(G_input, INPUT_HEIGHT * ((INPUT_WIDTH + 128) & 0xFFFFFF80) * sizeof(uint32_t));
+    G_input = AllocateDevice(INPUT_HEIGHT * ((INPUT_WIDTH + 128) & 0xFFFFFF80) * sizeof(uint32_t));
 
     void* G_bins;
-    cudaMalloc(G_bins, HISTO_HEIGHT * HISTO_WIDTH * sizeof(uint8_t));// important! it is uint8_t
+    G_bins = AllocateDevice(HISTO_HEIGHT * HISTO_WIDTH * sizeof(uint8_t));// important! it is uint8_t
 
-    cudaMemcpy(G_input, &input[0][0], INPUT_HEIGHT * ((INPUT_WIDTH + 128) & 0xFFFFFF80) * sizeof(uint32_t), 
-                    cudaMemcpyHostToDevice);
+    CopyToDevice(G_input, &input[0][0], INPUT_HEIGHT * ((INPUT_WIDTH + 128) & 0xFFFFFF80) * sizeof(uint32_t));
 
     /* End of setup code */
 
@@ -105,11 +103,10 @@ int main(int argc, char* argv[])
 
     /* Include your teardown code below (temporary variables, function calls, etc.) */
 
-    cudaMemcpy(kernel_bins, G_bins, HISTO_HEIGHT * HISTO_WIDTH * sizeof(uint8_t), 
-                    cudaMemcpyDeviceToHost);
+    CopyFromDevice(kernel_bins, G_bins, HISTO_HEIGHT * HISTO_WIDTH * sizeof(uint8_t));
 
-    cudaFree(G_bins);
-    cudaFree(G_input);
+    FreeDevice(G_bins);
+    FreeDevice(G_input);
 
     /* End of teardown code */
 

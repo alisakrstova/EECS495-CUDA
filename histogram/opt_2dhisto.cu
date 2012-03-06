@@ -35,3 +35,22 @@ __global__ void opt_2dhistoKernel(uint32_t *input[], size_t height, size_t width
         }
     }
 }
+
+void* AllocateDevice(size_t size){
+	void* ret;
+	return cudaMalloc(ret, size);
+}
+
+void CopyToDevice(void* D_device, void* D_host, size_t size){
+	cudaMemcpy(D_device, D_host, size, 
+					cudaMemcpyHostToDevice);
+}
+
+void CopyFromDevice(void* D_host, void* D_device, size_t size){
+	cudaMemcpy(D_host, D_device, size, 
+					cudaMemcpyDeviceToHost);
+}
+
+void FreeDevice(void* D_device){
+	cudaFree(D_device);
+}
