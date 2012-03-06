@@ -87,12 +87,12 @@ int main(int argc, char* argv[])
 
     void* G_input;
     //padded width and hight are 1024
-    cudaMalloc(G_input, 1024 * 1024 * sizeof(uint32_t));
+    cudaMalloc(G_input, INPUT_HEIGHT * ((INPUT_WIDTH + 128) & 0xFFFFFF80) * sizeof(uint32_t));
 
     void* G_bins;
-    cudaMalloc(G_bins, 1 * 1024 * sizeof(uint8_t));// important! it is uint8_t
+    cudaMalloc(G_bins, HISTO_HEIGHT * HISTO_WIDTH * sizeof(uint8_t));// important! it is uint8_t
 
-    cudaMemcpy(G_input, &input[0][0], 1024 * 1024 * sizeof(uint32_t), 
+    cudaMemcpy(G_input, &input[0][0], INPUT_HEIGHT * ((INPUT_WIDTH + 128) & 0xFFFFFF80) * sizeof(uint32_t), 
                     cudaMemcpyHostToDevice);
 
     /* End of setup code */
@@ -100,11 +100,11 @@ int main(int argc, char* argv[])
     /* This is the call you will use to time your parallel implementation */
     TIME_IT("opt_2dhisto",
             50,
-            opt_2dhisto( /*Define your own function parameters*/ );)
+            opt_2dhisto(G_input, INPUT_HEIGHT, INPUT_WIDTH, G_bins);)
 
     /* Include your teardown code below (temporary variables, function calls, etc.) */
 
-    cudaMemcpy(kernel_bins, G_bins, 1 * 1024 * sizeof(uint8_t), 
+    cudaMemcpy(kernel_bins, G_bins, HISTO_HEIGHT * HISTO_WIDTH * sizeof(uint8_t), 
                     cudaMemcpyDeviceToHost);
 
     cudaFree(G_bins);

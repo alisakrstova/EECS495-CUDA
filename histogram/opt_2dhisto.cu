@@ -6,7 +6,7 @@
 #include "util.h"
 #include "ref_2dhisto.h"
 
-void opt_2dhisto( /*define your own function parameters*/ )
+void opt_2dhisto(uint32_t *input[], size_t height, size_t width, uint8_t bins[HISTO_HEIGHT*HISTO_WIDTH])
 {
     /* This function should only contain a call to the GPU 
        histogramming kernel. Any memory allocations and
@@ -16,3 +16,7 @@ void opt_2dhisto( /*define your own function parameters*/ )
 
 /* Include below the implementation of any other functions you need */
 
+__global__ void opt_2dhistoKernel(uint32_t *input[], size_t height, size_t width, uint8_t bins[HISTO_HEIGHT*HISTO_WIDTH]){
+
+	
+}
