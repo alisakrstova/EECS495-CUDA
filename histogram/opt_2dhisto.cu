@@ -6,9 +6,9 @@
 #include "util.h"
 #include "ref_2dhisto.h"
 
-__global__ void opt_2dhistoKernel(uint32_t **input, size_t height, size_t width, uint8_t* bins);
+__global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint8_t* bins);
 
-void opt_2dhisto(uint32_t** input, size_t height, size_t width, uint8_t* bins)
+void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint8_t* bins)
 {
     /* This function should only contain a call to the GPU 
        histogramming kernel. Any memory allocations and
@@ -21,7 +21,7 @@ void opt_2dhisto(uint32_t** input, size_t height, size_t width, uint8_t* bins)
 
 /* Include below the implementation of any other functions you need */
 
-__global__ void opt_2dhistoKernel(uint32_t **input, size_t height, size_t width, uint8_t* bins){
+__global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint8_t* bins){
 
     for (size_t j = 0; j < height; ++j)
     {
@@ -29,8 +29,8 @@ __global__ void opt_2dhistoKernel(uint32_t **input, size_t height, size_t width,
         {
 
             // Increment the appropriate bin, but do not roll-over the max value
-            if (bins[input[j][i]] < UINT8_MAX)
-                ++bins[input[j][i]];
+            if (bins[input[j * height + i]] < UINT8_MAX)
+                ++bins[input[j * height + i]];
         }
     }
 }
