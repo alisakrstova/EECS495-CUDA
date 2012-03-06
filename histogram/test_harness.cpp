@@ -85,6 +85,8 @@ int main(int argc, char* argv[])
 
     /* Include your setup code below (temp variables, function calls, etc.) */
 
+    #include <cutil.h>
+
     void* G_input;
     //padded width and hight are 1024
     cudaMalloc(G_input, INPUT_HEIGHT * ((INPUT_WIDTH + 128) & 0xFFFFFF80) * sizeof(uint32_t));
