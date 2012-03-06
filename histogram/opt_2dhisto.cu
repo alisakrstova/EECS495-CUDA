@@ -13,6 +13,8 @@ void opt_2dhisto(uint32_t *input[], size_t height, size_t width, uint8_t bins[HI
        transfers must be done outside this function */
 
     cudaMemset	(bins, 0, HISTO_HEIGHT * HISTO_WIDTH * sizeof(bins[0]));
+
+    opt_2dhistoKernel<<<1, 1024>>>(input, height, width, bins);
 }
 
 /* Include below the implementation of any other functions you need */
