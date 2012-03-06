@@ -83,11 +83,9 @@ int main(int argc, char* argv[])
             50,
             ref_2dhisto(input, INPUT_HEIGHT, INPUT_WIDTH, gold_bins);)
 
-    /* Include your setup code below (temp variables, function calls, etc.) */
-
-    uint32_t* G_input;
     //padded width and hight are 1024
-    G_input = (uint32_t*)AllocateDevice(INPUT_HEIGHT * ((INPUT_WIDTH + 128) & 0xFFFFFF80) * sizeof(uint32_t));
+    uint32_t*   G_data = (uint32_t*) AllocateDevice(INPUT_HEIGHT * ((INPUT_WIDTH + 128) & 0xFFFFFF80) * sizeof(uint32_t));
+    uint32_t**  G_input = (uint32_t**) AllocateDevice(INPUT_HEIGHT * sizeof(void*));
 
     uint8_t* G_bins;
     G_bins = (uint8_t*)AllocateDevice(HISTO_HEIGHT * HISTO_WIDTH * sizeof(uint8_t));// important! it is uint8_t
@@ -107,6 +105,7 @@ int main(int argc, char* argv[])
 
     FreeDevice(G_bins);
     FreeDevice(G_input);
+    FreeDevice(G_data);
 
     /* End of teardown code */
 
