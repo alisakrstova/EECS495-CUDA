@@ -85,7 +85,15 @@ int main(int argc, char* argv[])
 
     /* Include your setup code below (temp variables, function calls, etc.) */
 
+    void* G_input;
+    //padded width and hight are 1024
+    cudaMalloc(G_input, 1024 * 1024 * sizeof(uint32_t));
 
+    void* G_bins;
+    cudaMalloc(G_bins, 1 * 1024 * sizeof(uint8_t));// important! it is uint8_t
+
+    cudaMemcpy(G_input, &input[0][0], 1024 * 1024 * sizeof(uint32_t), 
+                    cudaMemcpyHostToDevice);
 
     /* End of setup code */
 
@@ -96,7 +104,11 @@ int main(int argc, char* argv[])
 
     /* Include your teardown code below (temporary variables, function calls, etc.) */
 
+    cudaMemcpy(kernel_bins, G_bins, 1 * 1024 * sizeof(uint8_t), 
+                    cudaMemcpyDeviceToHost);
 
+    cudaFree(G_bins);
+    cudaFree(G_input);
 
     /* End of teardown code */
 
