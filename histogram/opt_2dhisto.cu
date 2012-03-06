@@ -12,11 +12,12 @@ void opt_2dhisto(uint32_t *input[], size_t height, size_t width, uint8_t bins[HI
        histogramming kernel. Any memory allocations and
        transfers must be done outside this function */
 
+    cudaMemset	(bins, 0, HISTO_HEIGHT * HISTO_WIDTH * sizeof(bins[0]));
 }
 
 /* Include below the implementation of any other functions you need */
 
 __global__ void opt_2dhistoKernel(uint32_t *input[], size_t height, size_t width, uint8_t bins[HISTO_HEIGHT*HISTO_WIDTH]){
 
-	
+
 }
