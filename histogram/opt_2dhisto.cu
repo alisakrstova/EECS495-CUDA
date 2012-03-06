@@ -40,7 +40,8 @@ __global__ void opt_2dhistoKernel(uint32_t *input[], size_t height, size_t width
 
 void* AllocateDevice(size_t size){
 	void* ret;
-	return cudaMalloc(ret, size);
+	cudaMalloc(ret, size);
+	return ret;
 }
 
 void CopyToDevice(void* D_device, void* D_host, size_t size){
