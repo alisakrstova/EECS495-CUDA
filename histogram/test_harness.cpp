@@ -107,6 +107,8 @@ int main(int argc, char* argv[])
     FreeDevice(G_bins);
     FreeDevice(G_input);
 
+    printf("%d\n", kernel_bins[540]);
+
     /* End of teardown code */
 
     int passed=1;
