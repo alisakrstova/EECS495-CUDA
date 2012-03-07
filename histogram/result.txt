@@ -1,0 +1,11 @@
+1. base line
+	naive code, only one thread execute the kernel from the ref
+
+	Timing 'ref_2dhisto' started
+		GetTimeOfDay Time (for 50 iterations) = 0.062
+		Clock Time        (for 50 iterations) = 0.07
+	Timing 'ref_2dhisto' ended
+	Timing 'opt_2dhisto' started
+		GetTimeOfDay Time (for 50 iterations) = 46.332
+		Clock Time        (for 50 iterations) = 46.33
+	Timing 'opt_2dhisto' ended
