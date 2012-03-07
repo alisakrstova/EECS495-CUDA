@@ -14,7 +14,7 @@ void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint8_t* bins)
        histogramming kernel. Any memory allocations and
        transfers must be done outside this function */
 
-    cudaMemset	(bins, 0, HISTO_HEIGHT * HISTO_WIDTH * sizeof(bins[0]));
+    //cudaMemset	(bins, 0, HISTO_HEIGHT * HISTO_WIDTH * sizeof(bins[0]));
 
     opt_2dhistoKernel<<<1, 512>>>(input, height, width, bins);
 
@@ -27,7 +27,8 @@ __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, 
 
     int idx = threadIdx.x;
     __shared__ uint s_bins[HISTO_HEIGHT*HISTO_WIDTH];
-
+    s_bins[idx] = 0;
+    s_bins[idx + width / 2] = 0;
 
 	if (s_bins[input[idx]] < UINT8_MAX)
 		atomicAdd(s_bins + input[idx], 1);
