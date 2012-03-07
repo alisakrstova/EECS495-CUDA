@@ -24,7 +24,7 @@ void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint8_t* bins)
 /* Include below the implementation of any other functions you need */
 
 __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint8_t* bins){
-if(threadIdx.x == 0){
+if(threadIdx.x == 0){// naive kernel
     for (size_t j = 0; j < height; ++j)
     {
         for (size_t i = 0; i < width; ++i)
