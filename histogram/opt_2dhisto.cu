@@ -39,8 +39,9 @@ __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, 
     }
     __syncthreads();
     bins[idx] = (uint8_t)s_bins[idx];
+    __syncthreads();
     bins[idx + width / 2] = (uint8_t)s_bins[idx + width / 2];
-
+    __syncthreads();
 }
 
 void* AllocateDevice(size_t size){
