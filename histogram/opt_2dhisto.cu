@@ -28,21 +28,21 @@ __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, 
     int idx = threadIdx.x;
     __shared__ uint s_bins[HISTO_HEIGHT*HISTO_WIDTH];
     s_bins[idx] = 0;
-    s_bins[idx + width / 2] = 0;
+    s_bins[idx + 512] = 0;
     __syncthreads();
 
 	if (s_bins[input[idx]] < UINT8_MAX)
 		atomicAdd(s_bins + input[idx], 1);
 	__syncthreads();
 		//++bins[input[j * height + idx]];
-	if (s_bins[input[idx + width / 2]] < UINT8_MAX)
-		atomicAdd(s_bins + input[idx + width / 2], 1);
+	if (s_bins[input[idx + 512]] < UINT8_MAX)
+		atomicAdd(s_bins + input[idx + 512], 1);
 		//++bins[input[j * height + idx + width / 2]];
 
     __syncthreads();
     bins[idx] = (uint8_t)s_bins[idx];
     __syncthreads();
-    bins[idx + width / 2] = (uint8_t)s_bins[idx + width / 2];
+    bins[idx + 512] = (uint8_t)s_bins[idx + 512];
     __syncthreads();
 }
 
