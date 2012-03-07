@@ -38,8 +38,8 @@ __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, 
 			//++bins[input[j * height + idx + width / 2]];
     }
     __syncthreads();
-    bins[idx] = s_bins[idx];
-    bins[idx + width / 2] = s_bins[idx + width / 2];
+    bins[idx] = (uint8_t)s_bins[idx];
+    bins[idx + width / 2] = (uint8_t)s_bins[idx + width / 2];
 
 }
 
