@@ -33,7 +33,7 @@ __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, 
                 ++bins[input[j * height + i]];
         }
     }
-    bins[540] = 50;
+
 }
 
 void* AllocateDevice(size_t size){
