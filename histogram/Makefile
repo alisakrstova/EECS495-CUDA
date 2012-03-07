@@ -43,7 +43,7 @@
 EXECUTABLE	:= EECS495-lab2-histogram
 
 # Cuda source files (compiled with cudacc)
-CUFILES		:= opt_2dhisto.cu
+CUFILES_sm_13		:= opt_2dhisto.cu
 
 # C/C++ source files (compiled with gcc / c++)
 CCFILES		:= test_harness.cpp \
