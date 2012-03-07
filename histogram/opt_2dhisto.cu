@@ -6,9 +6,9 @@
 #include "util.h"
 #include "ref_2dhisto.h"
 
-__global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint32_t* bins);
+__global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint8_t* bins);
 
-void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint32_t* bins)
+void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint8_t* bins)
 {
     /* This function should only contain a call to the GPU 
        histogramming kernel. Any memory allocations and
@@ -21,8 +21,8 @@ void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint32_t* bins)
 
 /* Include below the implementation of any other functions you need */
 
-__global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint32_t* bins){
-	if(threadIdx.x == 0){
+__global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint8_t* bins){
+
     for (size_t j = 0; j < height; ++j)
     {
         for (size_t i = 0; i < width; ++i)
@@ -33,8 +33,7 @@ __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, 
                 ++bins[input[j * height + i]];
         }
     }
-	}
-	bins[540] = 29;
+    bins[540] = 50;
 }
 
 void* AllocateDevice(size_t size){

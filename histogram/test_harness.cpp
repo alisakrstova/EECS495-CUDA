@@ -88,10 +88,10 @@ int main(int argc, char* argv[])
     //padded width and hight are 1024
     uint32_t*   G_input = (uint32_t*) AllocateDevice(INPUT_HEIGHT * ((INPUT_WIDTH + 128) & 0xFFFFFF80) * sizeof(uint32_t));
 
-    uint32_t* G_bins;
-    G_bins = (uint32_t*)AllocateDevice(HISTO_HEIGHT * HISTO_WIDTH * sizeof(uint32_t));// important! it is uint8_t
+    uint8_t* G_bins;
+    G_bins = (uint8_t*)AllocateDevice(HISTO_HEIGHT * HISTO_WIDTH * sizeof(uint8_t));// important! it is uint8_t
 
-    CopyToDevice(G_input, input[0], INPUT_HEIGHT * ((INPUT_WIDTH + 128) & 0xFFFFFF80) * sizeof(uint32_t));
+    CopyToDevice(G_input, &(input[0][0]), INPUT_HEIGHT * ((INPUT_WIDTH + 128) & 0xFFFFFF80) * sizeof(uint32_t));
 
     /* End of setup code */
 
@@ -102,11 +102,10 @@ int main(int argc, char* argv[])
 
     /* Include your teardown code below (temporary variables, function calls, etc.) */
 
-    CopyFromDevice(kernel_bins, G_bins, HISTO_HEIGHT * HISTO_WIDTH * sizeof(uint32_t));
+    CopyFromDevice(kernel_bins, G_bins, HISTO_HEIGHT * HISTO_WIDTH * sizeof(uint8_t));
 
     FreeDevice(G_bins);
     FreeDevice(G_input);
-    printf("%d\n", kernel_bins[540]);
 
     /* End of teardown code */
 
