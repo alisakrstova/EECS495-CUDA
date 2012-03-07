@@ -33,7 +33,7 @@ __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, 
 			atomicAdd(&bins[input[j * height + idx]], 1);
 			//++bins[input[j * height + idx]];
 		if (bins[input[j * height + idx + width / 2]] < UINT8_MAX)
-			atomicAdd(&bins[input[j * height + idx + width / 2], 1);
+			atomicAdd(&bins[input[j * height + idx + width / 2]], 1);
 			//++bins[input[j * height + idx + width / 2]];
 
     }
