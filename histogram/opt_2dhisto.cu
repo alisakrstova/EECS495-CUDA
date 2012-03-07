@@ -26,17 +26,20 @@ void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint8_t* bins)
 __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint8_t* bins){
 
     int idx = threadIdx.x;
+    __shared__ uint s_bins[HISTO_HEIGHT*HISTO_WIDTH];
 
     for (size_t j = 0; j < height; ++j)
     {
-		if (bins[input[j * height + idx]] < UINT8_MAX)
-			atomicAdd(bins + input[j * height + idx], 1);
+		if (s_bins[input[j * height + idx]] < UINT8_MAX)
+			atomicAdd(s_bins + input[j * height + idx], 1);
 			//++bins[input[j * height + idx]];
-		if (bins[input[j * height + idx + width / 2]] < UINT8_MAX)
-			atomicAdd(bins + input[j * height + idx + width / 2], 1);
+		if (s_bins[input[j * height + idx + width / 2]] < UINT8_MAX)
+			atomicAdd(s_bins + input[j * height + idx + width / 2], 1);
 			//++bins[input[j * height + idx + width / 2]];
-
     }
+
+    bins[idx] = s_bins[idx];
+    bins[idx + width / 2] = s_bins[idx + width / 2];
 
 }
 
