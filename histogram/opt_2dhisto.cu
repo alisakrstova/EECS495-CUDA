@@ -6,9 +6,9 @@
 #include "util.h"
 #include "ref_2dhisto.h"
 
-__global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint8_t* bins);
+__global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint32_t* bins);
 
-void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint8_t* bins)
+void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint32_t* bins)
 {
     /* This function should only contain a call to the GPU 
        histogramming kernel. Any memory allocations and
@@ -16,12 +16,12 @@ void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint8_t* bins)
 
     cudaMemset	(bins, 0, HISTO_HEIGHT * HISTO_WIDTH * sizeof(bins[0]));
 
-    opt_2dhistoKernel<<<1, 1024>>>(input, height, width, bins);
+    opt_2dhistoKernel<<<1, 512>>>(input, height, width, bins);
 }
 
 /* Include below the implementation of any other functions you need */
 
-__global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint8_t* bins){
+__global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint32_t* bins){
 	if(threadIdx.x == 0){
     for (size_t j = 0; j < height; ++j)
     {
