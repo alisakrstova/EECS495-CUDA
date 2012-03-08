@@ -16,7 +16,7 @@ void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint8_t* bins)
 
     //cudaMemset	(bins, 0, HISTO_HEIGHT * HISTO_WIDTH * sizeof(bins[0]));
 
-    opt_2dhistoKernel<<<2, 512>>>(input, height, width, bins);
+    opt_2dhistoKernel<<<2048, 512>>>(input, height, width, bins);
 
     cudaThreadSynchronize();
 }
