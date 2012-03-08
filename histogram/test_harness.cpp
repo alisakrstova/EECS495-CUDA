@@ -107,14 +107,15 @@ int main(int argc, char* argv[])
     FreeDevice(G_bins);
     FreeDevice(G_input);
 
-    for (int i = 0; i < 32; ++i)
+    int k = 512;
+    for (int i = 0; i < 2*k; ++i)
     {
-        printf("%2d ", kernel_bins[512 - 16 + i]);
+        printf("%2d ", kernel_bins[512 - k + i]);
     }
-
-    for (int i = 0; i < 32; ++i)
+    printf("\n");
+    for (int i = 0; i < 2*k; ++i)
     {
-        printf("%2d ", gold_bins[512 - 16 + i]);
+        printf("%2d ", gold_bins[512 - k + i]);
     }
 
     /* End of teardown code */
