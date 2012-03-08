@@ -42,7 +42,7 @@ __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, 
 	//if(s_bins[idx + 512] > UINT8_MAX) s_bins[idx + 512] = UINT8_MAX;
 
     __syncthreads();
-    bins[idx] = (uint8_t)s_bins[idx];
+    bins[idx] = (uint8_t)(s_bins[idx] & 0xFF);
     //__syncthreads();
     //bins[idx + 512] = (uint8_t)s_bins[idx + 512];
     //bins[idx + 512] = (uint8_t)s_bins[idx + 512];

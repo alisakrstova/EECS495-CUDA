@@ -109,7 +109,7 @@ int main(int argc, char* argv[])
 
     for (int i = 0; i < 32; ++i)
     {
-        printf("%d\n", kernel_bins[512 - 16 + i]);
+        printf("%2d ", kernel_bins[512 - 16 + i]);
     }
 
     /* End of teardown code */
