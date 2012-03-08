@@ -15,10 +15,10 @@ void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint8_t* bins)
        histogramming kernel. Any memory allocations and
        transfers must be done outside this function */
 	uint32_t* g_bins;
-	cudaMalloc(&g_bins, 1024);
+	cudaMalloc(&g_bins, 1024 * sizeof(uint32_t));
 
     cudaMemset(bins, 0, HISTO_HEIGHT * HISTO_WIDTH * sizeof(bins[0]));
-    cudaMemset(g_bins, 0, HISTO_HEIGHT * HISTO_WIDTH * sizeof(bins[0]));
+    cudaMemset(g_bins, 0, HISTO_HEIGHT * HISTO_WIDTH * sizeof(g_bins[0]));
 
     opt_2dhistoKernel<<<2048, 512>>>(input, height, width, g_bins);
 
