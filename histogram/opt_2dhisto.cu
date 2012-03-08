@@ -31,7 +31,7 @@ __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, 
     //s_bins[idx] = 0;
     __syncthreads();
 
-	if (g_bins[input[idx]] < UINT8_MAX)
+	if (bins[input[idx]] < UINT8_MAX)
 	
 	atomicAdd((uint32_t*)bins + input[idx]/4, (1 << (input[idx] % 4 * 8));
 
