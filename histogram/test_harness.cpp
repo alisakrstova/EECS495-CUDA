@@ -106,7 +106,7 @@ int main(int argc, char* argv[])
 
     FreeDevice(G_bins);
     FreeDevice(G_input);
-
+    /*
     int k = 512;
     for (int i = 0; i < 2*k; ++i)
     {
@@ -117,7 +117,7 @@ int main(int argc, char* argv[])
     {
         printf("%03d ", gold_bins[512 - k + i]);
     }
-
+    */
     /* End of teardown code */
 
     int passed=1;
