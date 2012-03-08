@@ -16,7 +16,7 @@ void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint8_t* bins)
 
     //cudaMemset	(bins, 0, HISTO_HEIGHT * HISTO_WIDTH * sizeof(bins[0]));
 
-    opt_2dhistoKernel<<<1, 512>>>(input, height, width, bins);
+    opt_2dhistoKernel<<<2, 512>>>(input, height, width, bins);
 
     cudaThreadSynchronize();
 }
@@ -25,10 +25,9 @@ void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint8_t* bins)
 
 __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint8_t* bins){
 
-    int idx = threadIdx.x;
+    int idx = blockDim.x * blockIdx.x + threadIdx.x;
     __shared__ uint s_bins[1024];
     s_bins[idx] = 0;
-    s_bins[idx + 512] = 0;
     __syncthreads();
 
 	//if (s_bins[input[idx]] < UINT8_MAX)
@@ -36,16 +35,16 @@ __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, 
 	__syncthreads();
 		//++bins[input[j * height + idx]];
 	//if (s_bins[input[idx + 512]] < UINT8_MAX)
-	atomicAdd(s_bins + input[idx + 512], 1);
+	//atomicAdd(s_bins + input[idx + 512], 1);
 		//++bins[input[j * height + idx + width / 2]];
 
 	if(s_bins[idx] > UINT8_MAX) s_bins[idx] = UINT8_MAX;
-	if(s_bins[idx + 512] > UINT8_MAX) s_bins[idx + 512] = UINT8_MAX;
+	//if(s_bins[idx + 512] > UINT8_MAX) s_bins[idx + 512] = UINT8_MAX;
 
     __syncthreads();
     bins[idx] = (uint8_t)s_bins[idx];
-    __syncthreads();
-    bins[idx + 512] = (uint8_t)s_bins[idx + 512];
+    //__syncthreads();
+    //bins[idx + 512] = (uint8_t)s_bins[idx + 512];
     //bins[idx + 512] = (uint8_t)s_bins[idx + 512];
     __syncthreads();
 }
