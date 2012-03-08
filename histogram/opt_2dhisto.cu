@@ -7,16 +7,21 @@
 #include "ref_2dhisto.h"
 
 __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint8_t* bins);
+__global__ void opt_32to8Kernel(uint32_t *input, uint8_t* output, size_t length);
 
 void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint8_t* bins)
 {
     /* This function should only contain a call to the GPU 
        histogramming kernel. Any memory allocations and
        transfers must be done outside this function */
+	uint32_t* g_bins;
+	cudaMalloc(&g_bins, 1024);
 
     cudaMemset(bins, 0, HISTO_HEIGHT * HISTO_WIDTH * sizeof(bins[0]));
 
-    opt_2dhistoKernel<<<2048, 512>>>(input, height, width, bins);
+    opt_2dhistoKernel<<<2048, 512>>>(input, height, width, g_bins);
+
+    opt_32to8Kernel<<<2, 512>>>(g_bins, bins, 1024);
 
     cudaThreadSynchronize();
 }
@@ -29,12 +34,9 @@ __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, 
     
     //__shared__ uint s_bins[1024];
     //s_bins[idx] = 0;
-    __syncthreads();
-
-	if (bins[input[idx]] < UINT8_MAX)
+    //__syncthreads();
 	
-	atomicAdd((uint32_t*)bins + input[idx]/4, 1 << (input[idx] % 4 * 8));
-
+	atomicAdd(bins + input[idx], 1);
 	__syncthreads();
 
 		//++bins[input[j * height + idx]];
@@ -51,6 +53,14 @@ __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, 
     //bins[idx + 512] = (uint8_t)s_bins[idx + 512];
     //bins[idx + 512] = (uint8_t)s_bins[idx + 512];
     //__syncthreads();
+}
+
+__global__ void opt_32to8Kernel(uint32_t *input, uint8_t* output, size_t length){
+	int idx = blockDim.x * blockIdx.x + threadIdx.x;
+	
+	output[idx] = (uint8_t)((input[idx] < UINT8_MAX) * input[idx]) + (input[idx] >= UINT8_MAX) * UINT8_MAX;
+
+	__syncthreads();
 }
 
 void* AllocateDevice(size_t size){
