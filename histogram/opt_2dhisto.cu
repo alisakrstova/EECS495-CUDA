@@ -18,12 +18,14 @@ void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint8_t* bins)
 	cudaMalloc(&g_bins, 1024);
 
     cudaMemset(bins, 0, HISTO_HEIGHT * HISTO_WIDTH * sizeof(bins[0]));
+    cudaMemset(g_bins, 0, HISTO_HEIGHT * HISTO_WIDTH * sizeof(bins[0]));
 
     opt_2dhistoKernel<<<2048, 512>>>(input, height, width, g_bins);
 
     opt_32to8Kernel<<<2, 512>>>(g_bins, bins, 1024);
 
     cudaThreadSynchronize();
+    cudaFree(g_bins);
 }
 
 /* Include below the implementation of any other functions you need */
