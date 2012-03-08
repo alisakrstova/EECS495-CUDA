@@ -14,9 +14,9 @@ void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint8_t* bins)
        histogramming kernel. Any memory allocations and
        transfers must be done outside this function */
 
-    //cudaMemset	(bins, 0, HISTO_HEIGHT * HISTO_WIDTH * sizeof(bins[0]));
+    cudaMemset(bins, 0, HISTO_HEIGHT * HISTO_WIDTH * sizeof(bins[0]));
 
-    opt_2dhistoKernel<<<2, 512>>>(input, height, width, bins);
+    opt_2dhistoKernel<<<2048, 512>>>(input, height, width, bins);
 
     cudaThreadSynchronize();
 }
@@ -26,30 +26,29 @@ void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint8_t* bins)
 __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint8_t* bins){
 
     int idx = blockDim.x * blockIdx.x + threadIdx.x;
-    __shared__ uint s_bins[1024];
-    s_bins[idx] = 0;
+    //__shared__ uint s_bins[1024];
+    //s_bins[idx] = 0;
     __syncthreads();
 
-	//if (s_bins[input[idx]] < UINT8_MAX)
-	for (int i = 0; i < 1024; ++i)
-	{
-		atomicAdd(s_bins + input[idx], 1);
-	}
+	if (bins[input[idx]] < UINT8_MAX)
+	
+	atomicAdd(bins + input[idx], 1);
+
 	__syncthreads();
 		//++bins[input[j * height + idx]];
 	//if (s_bins[input[idx + 512]] < UINT8_MAX)
 	//atomicAdd(s_bins + input[idx + 512], 1);
 		//++bins[input[j * height + idx + width / 2]];
 
-	if(s_bins[idx] > UINT8_MAX) s_bins[idx] = UINT8_MAX;
+	//if(s_bins[idx] > UINT8_MAX) s_bins[idx] = UINT8_MAX;
 	//if(s_bins[idx + 512] > UINT8_MAX) s_bins[idx + 512] = UINT8_MAX;
 
-    __syncthreads();
-    bins[idx] = (uint8_t)(s_bins[idx] & 0xFF);
+    //__syncthreads();
+    //bins[idx] = (uint8_t)(s_bins[idx] & 0xFF);
     //__syncthreads();
     //bins[idx + 512] = (uint8_t)s_bins[idx + 512];
     //bins[idx + 512] = (uint8_t)s_bins[idx + 512];
-    __syncthreads();
+    //__syncthreads();
 }
 
 void* AllocateDevice(size_t size){
