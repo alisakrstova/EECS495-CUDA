@@ -26,20 +26,17 @@ void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint8_t* bins)
 __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint8_t* bins){
 
     int idx = blockDim.x * blockIdx.x + threadIdx.x;
-    __device__ uint g_bins[1024];
+    
     //__shared__ uint s_bins[1024];
     //s_bins[idx] = 0;
     __syncthreads();
 
 	if (g_bins[input[idx]] < UINT8_MAX)
 	
-	atomicAdd(g_bins + input[idx], 1);
+	atomicAdd((uint32_t*)bins + input[idx]/4, (1 << (input[idx] % 4 * 8));
 
 	__syncthreads();
 
-	if(idx <1024)
-	bins[idx] = (uint8_t)g_bins[idx];
-	__syncthreads();
 		//++bins[input[j * height + idx]];
 	//if (s_bins[input[idx + 512]] < UINT8_MAX)
 	//atomicAdd(s_bins + input[idx + 512], 1);
