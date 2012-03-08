@@ -6,7 +6,7 @@
 #include "util.h"
 #include "ref_2dhisto.h"
 
-__global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint8_t* bins);
+__global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint32_t* bins);
 __global__ void opt_32to8Kernel(uint32_t *input, uint8_t* output, size_t length);
 
 void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint8_t* bins)
@@ -28,7 +28,7 @@ void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint8_t* bins)
 
 /* Include below the implementation of any other functions you need */
 
-__global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint8_t* bins){
+__global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint32_t* bins){
 
     int idx = blockDim.x * blockIdx.x + threadIdx.x;
     
