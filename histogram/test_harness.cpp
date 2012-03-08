@@ -110,12 +110,12 @@ int main(int argc, char* argv[])
     int k = 512;
     for (int i = 0; i < 2*k; ++i)
     {
-        printf("%2d ", kernel_bins[512 - k + i]);
+        printf("%03d ", kernel_bins[512 - k + i]);
     }
     printf("\n");
     for (int i = 0; i < 2*k; ++i)
     {
-        printf("%2d ", gold_bins[512 - k + i]);
+        printf("%03d ", gold_bins[512 - k + i]);
     }
 
     /* End of teardown code */
