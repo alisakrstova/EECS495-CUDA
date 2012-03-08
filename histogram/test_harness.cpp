@@ -107,7 +107,10 @@ int main(int argc, char* argv[])
     FreeDevice(G_bins);
     FreeDevice(G_input);
 
-    printf("%d\n", kernel_bins[540]);
+    for (int i = 0; i < 32; ++i)
+    {
+        printf("%d\n", kernel_bins[512 - 16 + i]);
+    }
 
     /* End of teardown code */
 
