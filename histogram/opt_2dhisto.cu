@@ -20,7 +20,7 @@ void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint8_t* bins)
     cudaMemset(bins, 0, HISTO_HEIGHT * HISTO_WIDTH * sizeof(bins[0]));
     cudaMemset(g_bins, 0, HISTO_HEIGHT * HISTO_WIDTH * sizeof(g_bins[0]));
 
-    opt_2dhistoKernel<<<height*width/512, 512>>>(input, height, width, g_bins);
+    opt_2dhistoKernel<<<2, 512>>>(input, height, width, g_bins);
 
     opt_32to8Kernel<<<HISTO_HEIGHT * HISTO_WIDTH / 512, 512>>>(g_bins, bins, 1024);
 
@@ -37,8 +37,11 @@ __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, 
     //__shared__ uint s_bins[1024];
     //s_bins[idx] = 0;
     //__syncthreads();
+	for (int i = 0; i < width; ++i)
+	{
+		atomicAdd(bins + input[idx * 1024 + i], 1);
+	}
 	
-	atomicAdd(bins + input[idx], 1);
 	__syncthreads();
 
 		//++bins[input[j * height + idx]];
