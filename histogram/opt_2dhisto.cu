@@ -26,7 +26,7 @@ void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint8_t* bins)
 __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint8_t* bins){
 
     int idx = threadIdx.x;
-    __shared__ uint s_bins[HISTO_HEIGHT*HISTO_WIDTH];
+    __global__ uint s_bins[HISTO_HEIGHT*HISTO_WIDTH];
     s_bins[idx] = 0;
     s_bins[idx + 512] = 0;
     __syncthreads();
