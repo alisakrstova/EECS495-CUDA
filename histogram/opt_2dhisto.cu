@@ -39,10 +39,13 @@ __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, 
 	atomicAdd(s_bins + input[idx + 512], 1);
 		//++bins[input[j * height + idx + width / 2]];
 
+	if(s_bins[idx] > UINT8_MAX) s_bins[idx] = UINT8_MAX;
+	if(s_bins[idx + 512] > UINT8_MAX) s_bins[idx + 512] = UINT8_MAX;
+
     __syncthreads();
-    bins[idx] = (s_bins[idx] >= UINT8_MAX) * UINT8_MAX + (s_bins[idx] < UINT8_MAX) * s_bins[idx];
+    bins[idx] = s_bins[idx];
     __syncthreads();
-    bins[idx + 512] = (s_bins[idx + 512] >= UINT8_MAX) * UINT8_MAX + (s_bins[idx + 512] < UINT8_MAX) * s_bins[idx + 512];
+    bins[idx + 512] = s_bins[idx + 512];
     //bins[idx + 512] = (uint8_t)s_bins[idx + 512];
     __syncthreads();
 }
