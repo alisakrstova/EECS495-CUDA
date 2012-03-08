@@ -1,6 +1,8 @@
 1. base line
-	naive code, only one thread execute the kernel from the ref
-
+	goal:			naive code, only one thread execute the kernel from the ref
+	difficulties:	figure out the whole framework, cuda functions must be written in .cu file, 
+	hours:			1 person * 4.5 hours
+	
 	Timing 'ref_2dhisto' started
 		GetTimeOfDay Time (for 50 iterations) = 0.062
 		Clock Time        (for 50 iterations) = 0.07
@@ -8,4 +10,17 @@
 	Timing 'opt_2dhisto' started
 		GetTimeOfDay Time (for 50 iterations) = 46.332
 		Clock Time        (for 50 iterations) = 46.33
+	Timing 'opt_2dhisto' ended
+
+2. first improve
+	goal:			concurrentize the kernel, use 2 blocks, totally 1024 threads for each height, that is input[idx][j]
+	difficulties:	atomicAdd require uint32_t data while the bin is uint8_t data, the input is not sequitional because of the padding
+	hours:			1 person * 5 hours
+	Timing 'ref_2dhisto' started
+		GetTimeOfDay Time (for 50 iterations) = 0.063
+		Clock Time        (for 50 iterations) = 0.06
+	Timing 'ref_2dhisto' ended
+	Timing 'opt_2dhisto' started
+		GetTimeOfDay Time (for 50 iterations) = 1.645
+		Clock Time        (for 50 iterations) = 1.64
 	Timing 'opt_2dhisto' ended
