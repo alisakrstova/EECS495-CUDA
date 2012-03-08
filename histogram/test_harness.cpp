@@ -112,6 +112,11 @@ int main(int argc, char* argv[])
         printf("%2d ", kernel_bins[512 - 16 + i]);
     }
 
+    for (int i = 0; i < 32; ++i)
+    {
+        printf("%2d ", gold_bins[512 - 16 + i]);
+    }
+
     /* End of teardown code */
 
     int passed=1;
