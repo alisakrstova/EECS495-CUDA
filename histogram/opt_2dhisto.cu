@@ -6,6 +6,8 @@
 #include "util.h"
 #include "ref_2dhisto.h"
 
+#define T 12
+
 __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint32_t* bins);
 __global__ void opt_32to8Kernel(uint32_t *input, uint8_t* output, size_t length);
 
@@ -19,9 +21,13 @@ void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint8_t* bins)
 
     cudaMemset(bins, 0, HISTO_HEIGHT * HISTO_WIDTH * sizeof(bins[0]));
     cudaMemset(g_bins, 0, HISTO_HEIGHT * HISTO_WIDTH * sizeof(g_bins[0]));
-
-    opt_2dhistoKernel<<<2, 512>>>(input, height, width, g_bins);
-
+    
+    
+    // Kernel to calculate the bins
+    // We use 1024 * T threads so that more streaming multiprocessors can be used
+    opt_2dhistoKernel<<<2 * T, 512>>>(input, height, width, g_bins);
+  
+    // Convert 332 bit to 8 bit
     opt_32to8Kernel<<<HISTO_HEIGHT * HISTO_WIDTH / 512, 512>>>(g_bins, bins, 1024);
 
     cudaThreadSynchronize();
@@ -31,14 +37,34 @@ void opt_2dhisto(uint32_t* input, size_t height, size_t width, uint8_t* bins)
 /* Include below the implementation of any other functions you need */
 
 __global__ void opt_2dhistoKernel(uint32_t *input, size_t height, size_t width, uint32_t* bins){
-
-    int idx = blockDim.x * blockIdx.x + threadIdx.x;
-    
-	for (int i = 0; i < width; ++i)
+	
+	// Shared memory to hold the sub-histogram
+	__shared__ int sub_hist[1024];
+	
+	// No bank conflict as threads access the shared memory sequentially
+	sub_hist[threadIdx.x] = 0;
+	sub_hist[threadIdx.x + 512] = 0;
+	
+	// Global thread id
+	int idx = blockDim.x * blockIdx.x + threadIdx.x;
+		
+	// Step 1: Divide each row into different groups so that each thread can concurrently work on a portion of the row
+	// 	   Acheived by dividing the row into 'T' groups each having (width/T) elements.
+	// Step 2: Calculate the row id and column id according to this new configuration
+	// 	   Row id = (idx / T) * height of the input data
+	// 	   Column id = (idx % T) * (width / T) , as each thread accesses data strided in the columns by (width / T)
+	// Step 3: Each thread performs work only in its assigned group
+	// 	   The loop runs from 0 to (width / T)
+	
+	for (int i = 0; i < (width / T); ++i)
 	{
-		atomicAdd(bins + input[idx * 1024 + i], 1);
+		atomicAdd(sub_hist + input[((idx / T) * height) + ((idx % T) * (width / T)) +  i], 1);
 	}
 	__syncthreads();
+	
+	// Update the global memory - storing is again sequential so no bank conflict
+	atomicAdd(bins + threadIdx.x, sub_hist[threadIdx.x]);
+	atomicAdd(bins + threadIdx.x + 512, sub_hist[threadIdx.x + 512]);
 }
 
 __global__ void opt_32to8Kernel(uint32_t *input, uint8_t* output, size_t length){
