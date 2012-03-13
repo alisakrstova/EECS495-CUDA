@@ -24,3 +24,47 @@
 		GetTimeOfDay Time (for 50 iterations) = 1.645
 		Clock Time        (for 50 iterations) = 1.64
 	Timing 'opt_2dhisto' ended
+
+3. Second Improvement
+ Goal: Make use of shared memory to hold the sub histograms so that the threads can work only on their sections of the data
+ Difficulties: Requires initial clearing of the sub-histogram
+ Hours: 2 * 1 hour
+ Timing 'ref_2dhisto' started
+        GetTimeOfDay Time (for 50 iterations) = 0.068
+        Clock Time        (for 50 iterations) = 0.07
+    Timing 'ref_2dhisto' ended
+    Timing 'opt_2dhisto' started
+        GetTimeOfDay Time (for 50 iterations) = 0.171
+        Clock Time        (for 50 iterations) = 0.18
+    Timing 'opt_2dhisto' ended
+
+    Test PASSED
+
+4. Third Improvement
+
+Goal: Improve the concurrency by using more streaming multiprocessors
+Difficulties: Calculating row id, column id for accessing the input
+Hours: 2 * 1 hour
+
+Timing 'ref_2dhisto' started
+        GetTimeOfDay Time (for 50 iterations) = 0.063
+        Clock Time        (for 50 iterations) = 0.07
+    Timing 'ref_2dhisto' ended
+    Timing 'opt_2dhisto' started
+        GetTimeOfDay Time (for 50 iterations) = 0.042
+        Clock Time        (for 50 iterations) = 0.05
+    Timing 'opt_2dhisto' ended
+
+    Test PASSED
+
+
+    Timing 'ref_2dhisto' started
+        GetTimeOfDay Time (for 1000 iterations) = 1.249
+        Clock Time        (for 1000 iterations) = 1.25
+    Timing 'ref_2dhisto' ended
+    Timing 'opt_2dhisto' started
+        GetTimeOfDay Time (for 1000 iterations) = 0.731
+        Clock Time        (for 1000 iterations) = 0.73
+    Timing 'opt_2dhisto' ended
+
+    Test PASSED
